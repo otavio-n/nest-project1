@@ -1,32 +1,49 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { UniversitiesService } from './universities.service';
+import { University } from './university.model';
 
 @Controller('universities')
 export class UniversitiesController {
+  constructor(private readonly universitiesService: UniversitiesService) {}
+
   @Get('import')
+  @HttpCode(201)
   importAll(): string {
-    return 'Import all universities';
+    return this.universitiesService.importAll();
   }
 
   @Get()
-  getAll(): string {
-    return 'List all universities';
+  getAll(): University[] {
+    return this.universitiesService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param() params): string {
-    return `Return university ${params.id}`;
+  getOne(@Param() params): University {
+    return this.universitiesService.getOne(params.id);
   }
 
   @Post()
-  createOne(@Body() university): string {
-    console.log({ university });
-
-    return 'University created';
+  @HttpCode(201)
+  createOne(@Body() university): void {
+    return this.universitiesService.createOne(university);
   }
 
   @Put()
-  updateOne(@Body() university): string {
-    console.log({ university });
-    return 'University updated';
+  updateOne(@Body() university): University {
+    return this.universitiesService.updateOne(university);
+  }
+
+  @Delete(':id')
+  deleteOne(@Param() params): void {
+    return this.universitiesService.deleteOne(params.id);
   }
 }
