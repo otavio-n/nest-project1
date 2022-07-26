@@ -17,8 +17,8 @@ export class UniversitiesController {
 
   @Get('import')
   @HttpCode(201)
-  importAll(): string {
-    return this.universitiesService.importAll();
+  async importAll(): Promise<string> {
+    return await this.universitiesService.importAll();
   }
 
   @Get()

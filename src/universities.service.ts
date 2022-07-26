@@ -1,16 +1,23 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { University } from './university.model';
 
 @Injectable()
 export class UniversitiesService {
+  constructor(private readonly httpService: HttpService) {}
   universities: University[] = [
     new University('123', 'uem', 'BR'),
     new University('321', 'uel', 'BR'),
     new University('312', 'mit', 'BR'),
   ];
+  //Promise<Observable<AxiosResponse<University[]>>>
+  async importAll(): Promise<string> {
+    const response = await this.httpService.axiosRef.get(
+      'http://universities.hipolabs.com/search?country=uruguay',
+    );
+    console.log(response.data);
 
-  importAll(): string {
-    return 'Import all universities';
+    return 'All universities imported';
   }
 
   getAll(): University[] {
