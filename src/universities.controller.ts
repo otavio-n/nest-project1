@@ -38,8 +38,8 @@ export class UniversitiesController {
   }
 
   @Put()
-  updateOne(@Body() university): University {
-    return this.universitiesService.updateOne(university);
+  async updateOne(@Body() university): Promise<University> {
+    return await this.universitiesService.updateOne(university);
   }
 
   @Delete(':id')

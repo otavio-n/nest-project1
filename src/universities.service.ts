@@ -39,7 +39,13 @@ export class UniversitiesService {
     await this.prisma.university.create({ data: university });
   }
 
-  updateOne(university): University {
+  async updateOne(university): Promise<University> {
+    await this.prisma.university.update({
+      data: university,
+      where: {
+        id: university.id,
+      },
+    });
     return university;
   }
 
