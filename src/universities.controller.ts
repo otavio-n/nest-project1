@@ -33,7 +33,7 @@ export class UniversitiesController {
 
   @Post()
   @HttpCode(201)
-  createOne(@Body() university): void {
+  async createOne(@Body() university): Promise<void> {
     return this.universitiesService.createOne(university);
   }
 
